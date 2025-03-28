@@ -1,9 +1,11 @@
 export function GET(request: Request) {
-  return Response.json({ hello: "FROM api/hello/GET!" });
+  console.log("[api]GET.");
+  return Response.json({ fromApi: "message from GET!" });
 }
 
 export async function POST(request: Request) {
+  console.log("[api]POST.");
   const body = await request.json();
   console.log(body);
-  return Response.json({ hello: "FROM api/hello/POST!", body });
+  return Response.json({ fromApi: "message from POST!", body });
 }
