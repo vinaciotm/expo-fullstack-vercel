@@ -2,68 +2,52 @@ import { Button, SafeAreaView, View } from "react-native";
 
 const jsonString = (json: any) => JSON.stringify(json, null, 2);
 
-export default function App() {
-  async function get(url: string) {
-    // GET hello
-    fetch(url + "/hello", {
+const VERCEL_URL = "https://expo-fullstack-vercel.vercel.app";
+const EAS_URL = "https://expo-fullstack-vercel.expo.app";
+const LOCAL_URL = "http://localhost:8081";
+
+async function get(url: string) {
+  try {
+    const route = `${url}/hello?name=inacio`;
+    console.log("[APP] GET URL: " + route);
+    const response = await fetch(route, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-    })
-      .then((response) => {
-        // check if ok
-        if (!response.ok) alert("GET !OK: " + jsonString(response.body));
-        // return json
-        return response.json();
-      })
-      .then((data) => {
-        // alert data
-        alert("GET DATA: " + jsonString(data));
-        console.log(url + "GET DATA: " + jsonString(data));
-      })
-      .catch((error) => {
-        // alert error
-        alert("GET ERROR: " + jsonString(error));
-        console.error(url + "GET ERROR: " + jsonString(error));
-      });
+    });
+    const data = await response.json();
+    alert("[APP] GET DATA: " + jsonString(data));
+    console.log("[APP] GET DATA: " + jsonString(data));
+  } catch (error) {
+    alert("[APP] GET ERROR: " + jsonString(error));
+    console.error("[APP] GET ERROR: " + jsonString(error));
   }
+}
 
-  async function post(url: string) {
-    // POST hello/POST
-    fetch(url + "/hello", {
+async function post(url: string) {
+  try {
+    const route = `${url}/hello`;
+    console.log("[APP] POST URL: " + route);
+    const response = await fetch(route, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({ fromClient: "message from client!" }),
-    })
-      .then((response) => {
-        // check if ok
-        if (!response.ok) alert("POST !OK: " + jsonString(response.body));
-        // return json
-        return response.json();
-      })
-      .then((data) => {
-        // alert data
-        alert("POST DATA: " + jsonString(data));
-        console.log(url + "POST DATA: " + jsonString(data));
-      })
-      .catch((error) => {
-        // alert error
-        alert("POST ERROR: " + jsonString(error));
-        console.error(url + "POST ERROR: " + jsonString(error));
-      });
+    });
+    const data = await response.json();
+    alert("[APP] POST DATA: " + jsonString(data));
+    console.log("[APP] POST DATA: " + jsonString(data));
+  } catch (error) {
+    alert("[APP] POST ERROR: " + jsonString(error));
+    console.error("[APP] POST ERROR: " + jsonString(error));
   }
+}
 
-  const VERCEL_URL = "https://expo-fullstack-vercel.vercel.app";
-  const EAS_URL = "https://expo-fullstack-vercel.expo.app";
-  const LOCAL_URL = "http://localhost:8081";
-
+export default function App() {
   return (
     <SafeAreaView>
       <View style={{ gap: 10, padding: 20 }}>

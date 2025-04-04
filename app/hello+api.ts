@@ -1,6 +1,8 @@
 export function GET(request: Request) {
-  console.log("[api]GET.");
-  return Response.json({ fromApi: "message from GET!" });
+  const params = new URL(request.url).searchParams;
+  const name = params.get("name");
+  console.log("[api]GET.", name);
+  return Response.json({ fromApi: "message from GET!", hello: name });
 }
 
 export async function POST(request: Request) {
